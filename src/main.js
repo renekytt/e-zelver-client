@@ -5,7 +5,7 @@ import store from './store'
 import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
-import {BASE_URL} from "./services/API";
+import {BASE_URL} from "./API";
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = BASE_URL;

@@ -25,7 +25,7 @@
 
 <script>
 import TheHeader from "../components/TheHeader.vue"
-import {BASE_URL} from "@/services/API";
+import {BASE_URL} from "@/API";
 
 export default {
   components: {
