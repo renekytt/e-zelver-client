@@ -19,24 +19,33 @@ const state = {
 
   const mutations = {
     setUser(state, payload) {
-      state.token = payload.token;
-      state.userId = payload.userId;
+      state.token = payload.jwt;
+      //state.userId = payload.userId;
     },
     resetToken(state) {
       state.token = null;
       state.userId = null;
-      state.uName = null;
     }
   }
 
 
   const actions = {
     async Register({dispatch}, form) {
-      await axios.post('register', form)
-      let UserForm = new FormData()
-      UserForm.append('username', form.username)
-      UserForm.append('password', form.password)
-      await dispatch('LogIn', UserForm)
+      await axios.post('/api/auth/customers/register', form)
+      let userLogin = {
+        'email' : form.email,
+        'password' : form.password
+      }
+      await dispatch('LogIn', userLogin)
+    },
+  
+    async LogIn({commit}, user) {
+      await axios.post("/api/auth/login", user);
+      await commit("setUser", user);
+    },
+    async LogOut({ commit }) {
+      let user = null;
+      commit("logout", user);
     },
   };
 

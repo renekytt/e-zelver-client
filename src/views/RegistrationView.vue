@@ -35,28 +35,14 @@ export default {
                 email:'',
                 age:''
             }
-        }
+        };
     },
   methods:{
       async registerUser() {
-      await fetch("https://e-zelver-api.herokuapp.com/api/auth/customers/register", {  
-        method: "POST",
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify({
-          name: this.form.name,
-          email: this.form.email,
-          password: this.form.password,
-          age: this.form.age
-        }),
-      })
-      .then(async response => {
-        const data = await response.json();
-        if(response.status==200){
-          localStorage.setItem("token", data.jwt);
-          this.$router.push("/")
-        }else{
-          console.log(data);
-        }
+      console.log("japo")
+      this.$store.dispatch('user/Register', this.form)
+      .then( {
+          //this.$router.push("/")
       })
       .catch(error => {
         console.error("There was an error!", error);
