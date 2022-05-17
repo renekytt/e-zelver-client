@@ -23,7 +23,7 @@ export default {
 
   data() {
     return {
-      products: []
+      products: [],
     }
   },
 
@@ -39,6 +39,8 @@ export default {
         .catch(error => console.log(error))
     }
   }
+  // need to add generating random id/cart if the first product is added
+  // Math.ceil(Math.random()*1000000) for example
 }
 </script>
 
