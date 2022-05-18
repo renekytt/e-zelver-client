@@ -53,19 +53,51 @@
 
 <script>
 import TheHeader from "../components/TheHeader.vue"
+import axios from "axios";
+import {BASE_URL, config} from "@/API";
 
 export default {
   components: {
     TheHeader
   },
   data() {
+
     return {
-      showError: false
+      showError: false,
+      shoppingCartId: '2'
     }
   },
 
+  mounted() {
+    this.fetchProducts();
+  },
   methods: {
-
+    fetchProducts: function () {
+      axios
+        .get(`${BASE_URL}/api/products/available`, config)
+        .then(response => (this.products = response.data))
+        .catch(error => console.log(error))
+    },
+    getCart: function () {
+      axios
+        .get(`${BASE_URL}/api/carts/${this.shoppingCartId}`, config)
+        .then(response => (this.products = response.data))
+        .catch(error => console.log(error))
+    },
+    getCartItems: function () {
+      axios
+        .get(`${BASE_URL}/api/carts/${this.shoppingCartId}/items`, config)
+        .then(response => (this.products = response.data))
+        .catch(error => console.log(error))
+    },
+    putCart: function () {
+      axios
+        .put(`${BASE_URL}/api/carts/${this.shoppingCartId}`, {
+          id: this.shoppingCartId
+         })
+        .then(response => (this.products = response.data))
+        .catch(error => console.log(error))
+    },
   }
 };
 </script>
