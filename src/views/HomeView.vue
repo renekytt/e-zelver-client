@@ -1,7 +1,7 @@
 <template>
   <the-header class="shadow-sm"></the-header>
   <div class="container">
-    <div class="row mt-4 text-start">
+    <div class="row mt-4 text-start justify-content-center">
       <div class="product" v-for="product in products" :key="product.id" style="width: 16rem;">
         <product-comp :product="product"></product-comp>
       </div>

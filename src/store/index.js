@@ -1,18 +1,8 @@
 import Vuex from "vuex";
-import user from './modules/user'
+import auth from './modules/auth'
 
-import createPersistedState from "vuex-persistedstate";
-
-const store = new Vuex.Store({
-  plugins: [
-    createPersistedState({
-      storage: window.sessionStorage,
-    }),
-  ],
+export default new Vuex.Store({
   modules: {
-    user
+    auth
   },
-
 });
-
-export default store;

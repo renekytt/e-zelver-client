@@ -27,18 +27,17 @@ export default {
       this.$router.push("login")
     },
     sign_out() {
-      console.log("logged out")
-      this.$store.dispatch('user/logout')
+      this.$store.dispatch('auth/logout')
     },
     home() {
-      this.$router.push("")
+      this.$router.push("/")
     },
     cart() {
       this.$router.push("cart")
     }
   },
   computed: {
-    ...mapGetters('user', ['isAuthenticated']),
+    ...mapGetters('auth', ['isAuthenticated']),
   }
 }
 </script>

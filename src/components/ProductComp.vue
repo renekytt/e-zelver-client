@@ -9,7 +9,7 @@
         Type: {{ product.type }}<br>
         Quantity: {{ product.quantity }}<br>
       </p>
-      <button type="button" class="btn btn-warning" @click="addToCart()">
+      <button type="button" class="btn btn-warning" v-if="isAuthenticated" @click="addToCart()">
         Add to Cart
       </button>
     </div>
@@ -19,6 +19,7 @@
 <script>
 import axios from "axios";
 import {BASE_URL, config} from "@/API";
+import {mapGetters} from "vuex";
 
 export default {
   name: "ProductComp",
@@ -28,6 +29,10 @@ export default {
     return {
       shoppingCartId: null,
     }
+  },
+
+  computed: {
+    ...mapGetters('auth', ['isAuthenticated']),
   },
 
   methods: {
