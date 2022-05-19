@@ -61,22 +61,23 @@ export default {
     TheHeader
   },
   data() {
-
     return {
       showError: false,
-      shoppingCartId: '2'
+      shoppingCartId: null,
     }
   },
 
   mounted() {
-    this.fetchProducts();
+    this.getCartId();
   },
   methods: {
-    fetchProducts: function () {
+    getCartId: function () {
       axios
-        .get(`${BASE_URL}/api/products/available`, config)
-        .then(response => (this.products = response.data))
-        .catch(error => console.log(error))
+        .get(`${BASE_URL}/api/carts/get`, config)
+        .then(response => {
+          this.shoppingCartId = response.data.id
+          this.getCart()
+        })
     },
     getCart: function () {
       axios
