@@ -2,7 +2,7 @@
   <the-header class="shadow-sm"></the-header>
   <div class="container">
     <div class="row mt-4 text-start">
-      <div class="card m-2" v-for="product in products" :key="product.id" style="width: 16rem;">
+      <div class="product" v-for="product in products" :key="product.id" style="width: 16rem;">
         <product-comp :product="product"></product-comp>
       </div>
     </div>
@@ -35,12 +35,9 @@ export default {
     fetchProducts: function () {
       axios
         .get(`${BASE_URL}/api/products/available`, config)
-        .then(response => (this.products = response.data))
-        .catch(error => console.log(error))
+        .then(response => this.products = response.data.sort((x, y) => x.id - y.id))
     }
   }
-  // need to add generating random id/cart if the first product is added
-  // Math.ceil(Math.random()*1000000) for example
 }
 </script>
 
