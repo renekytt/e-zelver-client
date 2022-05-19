@@ -25,7 +25,6 @@
 
 <script>
 import TheHeader from "../components/TheHeader.vue"
-import {BASE_URL} from "@/API";
 
 export default {
   components: {
@@ -42,29 +41,15 @@ export default {
     }
   },
   methods: {
-    async registerUser() {
-      await fetch(`${BASE_URL}/api/auth/customers/register`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          name: this.form.name,
-          email: this.form.email,
-          password: this.form.password,
-          age: this.form.age
-        }),
+    registerUser: function () {
+      this.$store.dispatch('auth/register', {
+        name: this.form.name,
+        email: this.form.email,
+        password: this.form.password,
+        age: this.form.age
       })
-        .then(async response => {
-          const data = await response.json();
-          if (response.status == 200) {
-            localStorage.setItem("token", data.jwt);
-            this.$router.push("/")
-          } else {
-            console.log(data);
-          }
-        })
-        .catch(error => {
-          console.error("There was an error!", error);
-        });
+        .then(() => this.$router.push("/"))
+        .catch(error => console.log(error));
     }
   }
 }

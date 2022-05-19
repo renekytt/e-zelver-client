@@ -27,7 +27,6 @@
 
 <script>
 import TheHeader from "../components/TheHeader.vue"
-import {BASE_URL} from "@/API";
 
 export default {
   components: {
@@ -44,31 +43,14 @@ export default {
   },
 
   methods: {
-    async loginUser() {
-      await fetch(`${BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          email: this.form.email,
-          password: this.form.password,
-        }),
+    loginUser: function () {
+      this.$store.dispatch('auth/login', {
+        email: this.form.email,
+        password: this.form.password
       })
-        .then(async response => {
-          const data = await response.json();
-          if (response.status == 200) {
-            localStorage.setItem("token", data.jwt);
-            this.$router.push("/");
-          } else {
-            console.log(data);
-            this.form.email = "";
-            this.form.password = "";
-            this.showError = true;
-          }
-        })
-        .catch(error => {
-          console.error("There was an error!", error);
-        });
-    }
+        .then(() => this.$router.push("/"))
+        .catch(() => this.showError = true);
+    },
   }
 };
 </script>
