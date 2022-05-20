@@ -25,7 +25,7 @@
               <span>{{product.productEntry.name}}</span>
             </td>
             <td>
-              <input type="number" name="" id="" @change="onChange(product.id,$event)" :value="product.quantity" size="4" min="1" max="10" />
+              <input type="number" :name="`amount-${product.id}`" :id="`amount-${product.id}`" @change="setItemQuantity(product.id,$event)" v-model="product.quantity" size="4" min="1" max="10" />
             </td>
             <td><span>{{parseFloat(product.productEntry.price).toFixed(2)}}</span></td>
             <td>
@@ -111,8 +111,19 @@ export default {
         (previousValue, currentValue) => previousValue + currentValue.productEntry.price, 0
       )).toFixed(2);
     },
-    //TODO: deleteItem
-    //TODO: changeCartItemQty
+    deleteItem: function (id) {
+      axios
+        .delete(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`)
+        .then(response => (this.products = response.data))
+        .catch(error => console.log(error))
+    },
+    setItemQuantity: function (id, event) {
+      const quantity = event.target.currentValue;
+      axios
+        .put(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, { quantity })
+        .then(response => (this.products = response.data))
+        .catch(error => console.log(error))
+    }
   }
 };
 </script>
