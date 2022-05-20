@@ -10,41 +10,40 @@
             <th scope="col" class="w-50">Product ID</th>
             <th scope="col" class="w-50">Item</th>
             <th scope="col" class="w-50">Quantity</th>
-            <th scope="col" class="w-50">Price</th>
+            <th scope="col" class="w-50">Price (eur)</th>
             <th scope="col" class="w-50"></th>
           </tr>
           </thead>
           <tbody>
 
-          <tr v-for="product in allItems" :key="product.id">
+          <tr v-for="product in products" :key="product.id">
             <td>{{product.id}}</td>
-            <td class="d-flex">
+            <td>
               <img
                 :src="product.img"
               />
-              <span>{{product.title}}</span>
+              <span>{{product.productEntry.name}}</span>
             </td>
             <td>
-              <input type="number" name="" id="" @change="onChange(product.id,$event)" :value="product.count" size="4" min="1" max="10" />
+              <input type="number" name="" id="" @change="onChange(product.id,$event)" :value="product.quantity" size="4" min="1" max="10" />
             </td>
-            <td><span>{{parseFloat(product.price*70).toFixed(2)}}</span></td>
+            <td><span>{{parseFloat(product.productEntry.price).toFixed(2)}}</span></td>
             <td>
               <button class="btn btn-danger" @click="deleteItem(product.id)">
-                <span class="material-symbols-outlined"> delete_forever</span>
+                <span class="material-symbols-outlined"> remove</span>
               </button>
             </td>
           </tr>
 
           <tr>
+            <td><b>Total</b></td>
             <td></td>
             <td></td>
-            <td>{{items}}</td>
-            <td>{{total}} eur</td>
-            <td><button class="btn btn-success" @click="addItem">Increase quantity</button></td>
-            <td> <button class="btn btn-success" @click="removeItem">Decrease quantity</button></td>
+            <td>{{totalPrice}}</td>
           </tr>
           </tbody>
         </table>
+<!--        TODO: Delivery location-->
         <button class="btn btn-success" @click="checkout">Buy Now</button>
       </div>
     </div>
@@ -64,6 +63,8 @@ export default {
     return {
       showError: false,
       shoppingCartId: null,
+      products: [],
+      totalPrice: 0,
     }
   },
 
@@ -76,7 +77,7 @@ export default {
         .get(`${BASE_URL}/api/carts/get`, config)
         .then(response => {
           this.shoppingCartId = response.data.id
-          this.getCart()
+          this.getCartItems()
         })
     },
     getCart: function () {
@@ -88,17 +89,30 @@ export default {
     getCartItems: function () {
       axios
         .get(`${BASE_URL}/api/carts/${this.shoppingCartId}/items`, config)
-        .then(response => (this.products = response.data))
+        .then(response => {
+          this.products = response.data;
+          this.getTotalPrice();
+        })
         .catch(error => console.log(error))
     },
-    putCart: function () {
+    checkout: function () {
       axios
         .put(`${BASE_URL}/api/carts/${this.shoppingCartId}`, {
           id: this.shoppingCartId
-         })
-        .then(response => (this.products = response.data))
+         })//TODO: delivery location
+        .then(response => {
+            console.log(response);
+            //TODO: redirect to tracking
+        })
         .catch(error => console.log(error))
     },
+    getTotalPrice: function () {
+      this.totalPrice = parseFloat(this.products.reduce(
+        (previousValue, currentValue) => previousValue + currentValue.productEntry.price, 0
+      )).toFixed(2);
+    },
+    //TODO: deleteItem
+    //TODO: changeCartItemQty
   }
 };
 </script>
