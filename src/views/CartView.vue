@@ -42,8 +42,12 @@
           </tr>
           </tbody>
         </table>
-<!--        TODO: Delivery location-->
+        <div class="card-header">Delivery Address</div>
+        <div id="update-location">
+          <input v-init type="text" name="email" v-model="deliveryLocation"> {{ deliveryLocation }}
+        </div>
         <button class="btn btn-success" @click="checkout">Buy Now</button>
+
       </div>
     </div>
   </div>
@@ -58,8 +62,18 @@ export default {
   components: {
     TheHeader
   },
+  el: '#update-location',
+  directives: {
+    init: {
+      bind(el) {
+        el.value = el.getAttribute('value');
+        el.dispatchEvent(new Event('input'));
+      }
+    }
+  },
   data() {
     return {
+      deliveryLocation: null,
       showError: false,
       shoppingCartId: null,
       products: [],
@@ -91,11 +105,12 @@ export default {
     checkout: function () {
       axios
         .put(`${BASE_URL}/api/carts/${this.shoppingCartId}`, {
-          id: this.shoppingCartId
-         }, config)//TODO: delivery location
+          id: this.shoppingCartId,
+          deliveryLocation: this.deliveryLocation
+         }, config)
         .then(response => {
             console.log(response);
-            //TODO: redirect to tracking
+            this.redirectToTracking(this.shoppingCartId)
         })
         .catch(error => console.log(error))
     },
@@ -118,7 +133,7 @@ export default {
         .catch(error => console.log(error))
     },
     redirectToTracking() {
-      this.$router.push("tracking")
+      this.$router.push({name: "tracking", params: {id: this.shoppingCartId}})
     },
   }
 };
@@ -159,7 +174,7 @@ input {
 }
 
 .cart img {
-  width: 100px; 
+  width: 100px;
   height: auto;
   margin-right: 1em;
 }

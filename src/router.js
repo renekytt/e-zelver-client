@@ -22,7 +22,7 @@ const routes = [
     component: () => import('./views/CartView.vue')
   },
   {
-    path: '/tracking',
+    path: '/tracking/:id',
     name: 'tracking',
     component: () => import('./views/TrackingView.vue')
   },
