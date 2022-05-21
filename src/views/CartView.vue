@@ -19,9 +19,7 @@
           <tr v-for="product in products" :key="product.id">
             <td>{{product.id}}</td>
             <td>
-              <img
-                :src="product.img"
-              />
+              <img :src="product.productEntry.image" style="width: 100px; height: auto" />&nbsp;
               <span>{{product.productEntry.name}}</span>
             </td>
             <td>
