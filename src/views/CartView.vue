@@ -99,7 +99,7 @@ export default {
       axios
         .put(`${BASE_URL}/api/carts/${this.shoppingCartId}`, {
           id: this.shoppingCartId
-         })//TODO: delivery location
+         }, config)//TODO: delivery location
         .then(response => {
             console.log(response);
             //TODO: redirect to tracking
@@ -113,14 +113,14 @@ export default {
     },
     deleteItem: function (id) {
       axios
-        .delete(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`)
+        .delete(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, config)
         .then(response => (this.products = response.data))
         .catch(error => console.log(error))
     },
     setItemQuantity: function (id, event) {
       const quantity = event.target.currentValue;
       axios
-        .put(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, { quantity })
+        .put(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, { quantity }, config)
         .then(response => (this.products = response.data))
         .catch(error => console.log(error))
     }
