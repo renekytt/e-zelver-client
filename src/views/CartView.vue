@@ -80,12 +80,6 @@ export default {
           this.getCartItems()
         })
     },
-    getCart: function () {
-      axios
-        .get(`${BASE_URL}/api/carts/${this.shoppingCartId}`, config)
-        .then(response => (this.products = response.data))
-        .catch(error => console.log(error))
-    },
     getCartItems: function () {
       axios
         .get(`${BASE_URL}/api/carts/${this.shoppingCartId}/items`, config)
@@ -123,7 +117,10 @@ export default {
         .put(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, { quantity })
         .then(response => (this.products = response.data))
         .catch(error => console.log(error))
-    }
+    },
+    redirectToTracking() {
+      this.$router.push("tracking")
+    },
   }
 };
 </script>
