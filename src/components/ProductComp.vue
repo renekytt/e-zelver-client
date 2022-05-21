@@ -3,7 +3,7 @@
     <div class="card-body">
       <h5 class="card-title">{{ product.name }}</h5>
       <h5 class="card-subtitle mb-2 text-muted">{{ product.price }}€</h5>
-      <img :src="product.image" style="width: 100%; height: auto" />
+      <img :src="product.image" />
       <p class="card-text ">
         Weight: {{ product.weight }}<br>
         Dimensions: {{ product.dimensions }}<br>
@@ -56,5 +56,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .card-body img {
+    width: 100%; 
+    height: auto;
+  }
 </style>

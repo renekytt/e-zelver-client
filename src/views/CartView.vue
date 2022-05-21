@@ -19,7 +19,7 @@
           <tr v-for="product in products" :key="product.id">
             <td>{{product.id}}</td>
             <td>
-              <img :src="product.productEntry.image" style="width: 100px; height: auto" />&nbsp;
+              <img :src="product.productEntry.image" />
               <span>{{product.productEntry.name}}</span>
             </td>
             <td>
@@ -38,6 +38,7 @@
             <td></td>
             <td></td>
             <td>{{totalPrice}}</td>
+            <td></td>
           </tr>
           </tbody>
         </table>
@@ -151,5 +152,15 @@ input {
 #error {
   color: #b30000;
   font-weight: bold;
+}
+
+.cart td {
+  vertical-align: middle;
+}
+
+.cart img {
+  width: 100px; 
+  height: auto;
+  margin-right: 1em;
 }
 </style>
