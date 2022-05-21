@@ -21,6 +21,12 @@ export default {
     isAuthenticated(state) {
       return !!state.token;
     },
+    isCustomer(state) {
+      return !!(state.payload && state.payload.roles.includes("CUSTOMER"));
+    },
+    isEmployee(state) {
+      return !!(state.payload && state.payload.roles.includes("EMPLOYEE"));
+    }
   },
 
   mutations: {

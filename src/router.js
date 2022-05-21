@@ -26,6 +26,16 @@ const routes = [
     name: 'tracking',
     component: () => import('./views/TrackingView.vue')
   },
+  {
+    path: '/products/add',
+    name: 'addProduct',
+    component: () => import('./views/AddProductView.vue')
+  },
+  {
+    path: '/products/:id',
+    name: 'editProduct',
+    component: () => import('./views/EditProductView.vue')
+  },
 ]
 
 const router = createRouter({

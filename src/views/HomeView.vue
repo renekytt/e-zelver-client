@@ -6,6 +6,7 @@
         <product-comp :product="product"></product-comp>
       </div>
     </div>
+    <button type="button" class="btn btn-secondary" v-if="isEmployee" @click="addProduct()">Add a new product</button>
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 import TheHeader from "../components/TheHeader.vue"
 import {BASE_URL, config} from "@/API";
 import axios from "axios";
+import {mapGetters} from "vuex";
 import ProductComp from "@/components/ProductComp";
 
 export default {
@@ -27,6 +29,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('auth', ['isEmployee']),
+  },
+
   mounted() {
     this.fetchProducts();
   },
@@ -35,7 +41,10 @@ export default {
     fetchProducts: function () {
       axios
         .get(`${BASE_URL}/api/products/available`, config)
-        .then(response => this.products = response.data.sort((x, y) => x.id - y.id))
+        .then(response => this.products = response.data.sort((x, y) => x.id - y.id)) // todo: move to API?
+    },
+    addProduct() {
+      this.$router.push("/products/add")
     }
   }
 }
