@@ -72,8 +72,4 @@ export default {
   max-width: 800px;
   padding: 10px;
 }
-
-li {
-  list-style-type: none;
-}
 </style>
