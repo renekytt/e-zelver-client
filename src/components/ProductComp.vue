@@ -10,7 +10,7 @@
         Type: {{ product.type }}<br />
         Quantity: {{ product.quantity }}<br />
       </p>
-      <button type="button" class="btn btn-warning" v-if="isAuthenticated" @click="addToCart()">Add to Cart</button>
+      <button type="button" class="btn btn-warning" v-if="isCustomer" @click="addToCart()">Add to Cart</button>
       <button type="button" class="btn btn-secondary" v-if="isEmployee" @click="editProduct()">Edit</button>
       <button type="button" class="btn btn-danger" v-if="isEmployee" @click="deleteProduct()">Delete</button>
     </div>
@@ -33,7 +33,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("auth", ["isAuthenticated", "isEmployee"]),
+    ...mapGetters("auth", ["isAuthenticated", "isEmployee", "isCustomer"]),
   },
 
   methods: {

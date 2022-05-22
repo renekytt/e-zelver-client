@@ -8,7 +8,7 @@
     <div class="item">
       <div class="group">
         <div class="detail">
-          <button class="action-btn" @click="cart()">CART</button>
+          <button class="action-btn" v-if="isCustomer" @click="cart()">CART</button>
           <button class="action-btn" v-if="!isAuthenticated" @click="login()">SIGN IN</button>
           <button class="action-btn" v-if="isAuthenticated" @click="sign_out()">SIGN OUT</button>
         </div>
@@ -37,7 +37,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('auth', ['isAuthenticated']),
+    ...mapGetters('auth', ['isAuthenticated', 'isCustomer']),
   }
 }
 </script>
