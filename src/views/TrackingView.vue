@@ -54,7 +54,7 @@ export default {
   methods: {
     getCart: function () {
       axios
-        .get(`${BASE_URL}/api/carts/${this.$route.params.id}`, config)
+        .get(`${BASE_URL}/api/carts/${this.$route.params.id}`, config())
         .then(response => {
           this.status = response.data.order.status
           this.deliveryLocation = response.data.order.deliveryLocation

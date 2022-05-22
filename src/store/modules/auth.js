@@ -54,7 +54,8 @@ export default {
       })
     },
     logout({commit}) {
-      commit('logout')
+      localStorage.removeItem('token');
+      commit('logout');
     },
     register({commit}, form) {
       return new Promise((resolve, reject) => {

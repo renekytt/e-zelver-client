@@ -38,7 +38,7 @@ export default {
 
   methods: {
     addToCart: function () {
-      axios.get(`${BASE_URL}/api/carts/get`, config).then((response) => {
+      axios.get(`${BASE_URL}/api/carts/get`, config()).then((response) => {
         axios
           .put(
             `${BASE_URL}/api/carts/${response.data.id}/items`,
@@ -48,7 +48,7 @@ export default {
               },
               quantity: 1,
             },
-            config
+            config()
           )
           .then(() => this.$parent.fetchProducts());
       });
@@ -57,7 +57,7 @@ export default {
       this.$router.push(`/products/${this.product.id}`);
     },
     deleteProduct: function () {
-      axios.delete(`${BASE_URL}/api/products/${this.product.id}`, config).then(() => this.$parent.fetchProducts());
+      axios.delete(`${BASE_URL}/api/products/${this.product.id}`, config()).then(() => this.$parent.fetchProducts());
     },
   },
 };

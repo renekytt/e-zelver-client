@@ -33,7 +33,7 @@ export default {
 
   methods: {
     addProduct: function (product) {
-      axios.post(`${BASE_URL}/api/products`, product, config).then(() => this.$router.push("/"));
+      axios.post(`${BASE_URL}/api/products`, product, config()).then(() => this.$router.push("/"));
     },
   },
 };

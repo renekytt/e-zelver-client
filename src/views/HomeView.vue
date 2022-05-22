@@ -40,7 +40,7 @@ export default {
   methods: {
     fetchProducts: function () {
       axios
-        .get(`${BASE_URL}/api/products/available`, config)
+        .get(`${BASE_URL}/api/products/available`, config())
         .then(response => this.products = response.data.sort((x, y) => x.id - y.id)) // todo: move to API?
     },
     addProduct() {

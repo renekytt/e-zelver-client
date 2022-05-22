@@ -17,15 +17,16 @@
           <tbody>
 
           <tr v-for="product in products" :key="product.id">
-            <td>{{product.id}}</td>
+            <td>{{ product.id }}</td>
             <td>
-              <img :src="product.productEntry.image" />
-              <span>{{product.productEntry.name}}</span>
+              <img :src="product.productEntry.image"/>
+              <span>{{ product.productEntry.name }}</span>
             </td>
             <td>
-              <input type="number" :name="`amount-${product.id}`" :id="`amount-${product.id}`" @change="setItemQuantity(product.id,$event)" v-model="product.quantity" size="4" min="1" max="10" />
+              <input type="number" :name="`amount-${product.id}`" :id="`amount-${product.id}`"
+                     @change="setItemQuantity(product.id,$event)" v-model="product.quantity" size="4" min="1" max="10"/>
             </td>
-            <td><span>{{parseFloat(product.productEntry.price).toFixed(2)}}</span></td>
+            <td><span>{{ parseFloat(product.productEntry.price).toFixed(2) }}</span></td>
             <td>
               <button class="btn btn-danger" @click="deleteItem(product.id)">
                 <span class="material-symbols-outlined"> remove</span>
@@ -37,14 +38,14 @@
             <td><b>Total</b></td>
             <td></td>
             <td></td>
-            <td>{{totalPrice}}</td>
+            <td>{{ totalPrice }}</td>
             <td></td>
           </tr>
           </tbody>
         </table>
         <div class="card-header">Delivery Address</div>
         <div id="update-location">
-          <input v-init type="text" name="email" v-model="deliveryLocation"> {{ deliveryLocation }}
+          <input v-init type="text" name="email" v-model="deliveryLocation">
         </div>
         <button class="btn btn-success" @click="checkout">Buy Now</button>
 
@@ -87,7 +88,7 @@ export default {
   methods: {
     getCartId: function () {
       axios
-        .get(`${BASE_URL}/api/carts/get`, config)
+        .get(`${BASE_URL}/api/carts/get`, config())
         .then(response => {
           this.shoppingCartId = response.data.id
           this.getCartItems()
@@ -95,42 +96,37 @@ export default {
     },
     getCartItems: function () {
       axios
-        .get(`${BASE_URL}/api/carts/${this.shoppingCartId}/items`, config)
+        .get(`${BASE_URL}/api/carts/${this.shoppingCartId}`, config())
         .then(response => {
-          this.products = response.data;
-          this.getTotalPrice();
+          this.products = response.data.items;
+          this.totalPrice = response.data.amount;
         })
-        .catch(error => console.log(error))
     },
     checkout: function () {
       axios
         .put(`${BASE_URL}/api/carts/${this.shoppingCartId}`, {
           id: this.shoppingCartId,
           deliveryLocation: this.deliveryLocation
-         }, config)
-        .then(response => {
-            console.log(response);
-            this.redirectToTracking(this.shoppingCartId)
-        })
-        .catch(error => console.log(error))
-    },
-    getTotalPrice: function () {
-      this.totalPrice = parseFloat(this.products.reduce(
-        (previousValue, currentValue) => previousValue + currentValue.productEntry.price, 0
-      )).toFixed(2);
+        }, config())
+        .then(() => this.redirectToTracking(this.shoppingCartId))
     },
     deleteItem: function (id) {
       axios
-        .delete(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, config)
-        .then(response => (this.products = response.data))
-        .catch(error => console.log(error))
+        .delete(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, config())
+        .then(response => {
+          this.products = response.data.items;
+          this.totalPrice = response.data.amount;
+        })
     },
     setItemQuantity: function (id, event) {
-      const quantity = event.target.currentValue;
       axios
-        .put(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, { quantity }, config)
-        .then(response => (this.products = response.data))
-        .catch(error => console.log(error))
+        .put(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, {
+          quantity: event.target.value
+        }, config())
+        .then(response => {
+          this.products = response.data.items;
+          this.totalPrice = response.data.amount;
+        })
     },
     redirectToTracking() {
       this.$router.push({name: "tracking", params: {id: this.shoppingCartId}})

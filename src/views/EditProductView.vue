@@ -28,12 +28,12 @@ export default {
   methods: {
     fetchProduct: function () {
       axios
-        .get(`${BASE_URL}/api/products/${this.$route.params.id}`, config)
+        .get(`${BASE_URL}/api/products/${this.$route.params.id}`, config())
         .then((response) => (this.product = response.data));
     },
     editProduct: function (product) {
       axios
-        .put(`${BASE_URL}/api/products/${this.$route.params.id}`, product, config)
+        .put(`${BASE_URL}/api/products/${this.$route.params.id}`, product, config())
         .then(() => this.$router.push("/"));
     },
   },
