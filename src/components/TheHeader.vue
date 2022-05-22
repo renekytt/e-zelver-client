@@ -8,6 +8,7 @@
     <div class="item">
       <div class="group">
         <div class="detail">
+          <button class="action-btn" v-if="isCustomer" @click="orders()">ORDERS</button>
           <button class="action-btn" v-if="isCustomer" @click="cart()">CART</button>
           <button class="action-btn" v-if="!isAuthenticated" @click="login()">SIGN IN</button>
           <button class="action-btn" v-if="isAuthenticated" @click="sign_out()">SIGN OUT</button>
@@ -24,16 +25,20 @@ import {mapGetters} from "vuex";
 export default {
   methods: {
     login() {
-      this.$router.push("login")
+      this.$router.push("/login")
     },
     sign_out() {
-      this.$store.dispatch('auth/logout')
+      this.$store.dispatch('auth/logout');
+      this.home();
     },
     home() {
       this.$router.push("/")
     },
     cart() {
-      this.$router.push("cart")
+      this.$router.push("/cart")
+    },
+    orders() {
+      this.$router.push("/orders")
     }
   },
   computed: {

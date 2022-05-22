@@ -1,7 +1,7 @@
 <template>
   <the-header class="shadow-sm"></the-header>
   <div class="container">
-    <div class="layout-login">
+    <div class="mt-5">
       <div class="card">
         <div class="card-header">Login</div>
         <form @submit.prevent="loginUser">
@@ -74,10 +74,6 @@ input {
 .link a, .link {
   text-align: center;
   text-decoration: none;
-}
-
-.layout-login {
-  margin: 125px auto auto;
 }
 
 #error {

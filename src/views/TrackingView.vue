@@ -1,7 +1,7 @@
 <template>
   <the-header class="shadow-sm"></the-header>
   <div class="container">
-    <div class="layout-login">
+    <div class="mt-5">
       <div class="card">
         <div class="card-header">Delivery details</div>
         <table class="table cart">
@@ -78,21 +78,8 @@ input {
   padding: 8px;
 }
 
-.btn {
-  margin-top: 10px;
-}
-
-.link a, .link {
+.link a {
   text-align: center;
   text-decoration: none;
-}
-
-.layout-login {
-  margin: 125px auto auto;
-}
-
-#error {
-  color: #b30000;
-  font-weight: bold;
 }
 </style>

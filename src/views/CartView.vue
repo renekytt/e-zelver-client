@@ -1,7 +1,7 @@
 <template>
   <the-header class="shadow-sm"></the-header>
   <div class="container">
-    <div class="layout-login">
+    <div class="mt-5">
       <div class="card">
         <div class="card-header">Cart</div>
         <table class="table cart">
@@ -75,7 +75,6 @@ export default {
   data() {
     return {
       deliveryLocation: null,
-      showError: false,
       shoppingCartId: null,
       products: [],
       totalPrice: 0,
@@ -98,7 +97,7 @@ export default {
       axios
         .get(`${BASE_URL}/api/carts/${this.shoppingCartId}`, config())
         .then(response => {
-          this.products = response.data.items;
+          this.products = response.data.items.sort((x, y) => x.id - y.id);
           this.totalPrice = response.data.amount;
         })
     },
@@ -114,7 +113,7 @@ export default {
       axios
         .delete(`${BASE_URL}/api/carts/${this.shoppingCartId}/items/${id}`, config())
         .then(response => {
-          this.products = response.data.items;
+          this.products = response.data.items.sort((x, y) => x.id - y.id);
           this.totalPrice = response.data.amount;
         })
     },
@@ -124,7 +123,7 @@ export default {
           quantity: event.target.value
         }, config())
         .then(response => {
-          this.products = response.data.items;
+          this.products = response.data.items.sort((x, y) => x.id - y.id);
           this.totalPrice = response.data.amount;
         })
     },
@@ -151,18 +150,9 @@ input {
   margin-top: 10px;
 }
 
-.link a, .link {
+.link a {
   text-align: center;
   text-decoration: none;
-}
-
-.layout-login {
-  margin: 125px auto auto;
-}
-
-#error {
-  color: #b30000;
-  font-weight: bold;
 }
 
 .cart td {
